@@ -1,0 +1,18 @@
+{
+    "sourceFile": "config/services.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1668343530726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1668343530726,
+            "name": "Commit-0",
+            "content": "<?php\n\nreturn [\n\n    /*\n    |--------------------------------------------------------------------------\n    | Third Party Services\n    |--------------------------------------------------------------------------\n    |\n    | This file is for storing the credentials for third party services such\n    | as Mailgun, Postmark, AWS and more. This file provides the de facto\n    | location for this type of information, allowing packages to have\n    | a conventional file to locate the various service credentials.\n    |\n    */\n\n    'mailgun' => [\n        'domain' => env('MAILGUN_DOMAIN'),\n        'secret' => env('MAILGUN_SECRET'),\n        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),\n    ],\n\n    'postmark' => [\n        'token' => env('POSTMARK_TOKEN'),\n    ],\n\n    'ses' => [\n        'key' => env('AWS_ACCESS_KEY_ID'),\n        'secret' => env('AWS_SECRET_ACCESS_KEY'),\n        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),\n    ],\n    \n\n];\n"
+        }
+    ]
+}

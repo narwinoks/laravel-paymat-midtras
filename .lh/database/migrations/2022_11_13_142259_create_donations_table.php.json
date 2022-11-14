@@ -1,0 +1,26 @@
+{
+    "sourceFile": "database/migrations/2022_11_13_142259_create_donations_table.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1668349413691,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1668349427983,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     public function up()\n     {\n         Schema::create('donations', function (Blueprint $table) {\n             $table->bigIncrements('id');\n-            $table->string('')\n+            $table->string('donor_name')\n             $table->timestamps();\n         });\n     }\n \n"
+                },
+                {
+                    "date": 1668349433146,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,10 @@\n     public function up()\n     {\n         Schema::create('donations', function (Blueprint $table) {\n             $table->bigIncrements('id');\n-            $table->string('donor_name')\n+            $table->string('donor_name')->nullable();\n+            $table->string('donor_name')->nullable();\n             $table->timestamps();\n         });\n     }\n \n"
+                }
+            ],
+            "date": 1668349413691,
+            "name": "Commit-0",
+            "content": "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nclass CreateDonationsTable extends Migration\n{\n    /**\n     * Run the migrations.\n     *\n     * @return void\n     */\n    public function up()\n    {\n        Schema::create('donations', function (Blueprint $table) {\n            $table->bigIncrements('id');\n            $table->string('')\n            $table->timestamps();\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     *\n     * @return void\n     */\n    public function down()\n    {\n        Schema::dropIfExists('donations');\n    }\n}\n"
+        }
+    ]
+}
