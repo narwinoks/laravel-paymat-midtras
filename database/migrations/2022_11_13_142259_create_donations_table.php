@@ -17,6 +17,11 @@ class CreateDonationsTable extends Migration
             $table->bigIncrements('id');
             $table->string('donor_name')->nullable();
             $table->string('donor_email')->nullable();
+            $table->string('dononation_type')->nullable();
+            $table->decimal('amount',20,2)->default(0);
+            $table->string('node')->nullable();
+            $table->string('status')->default('pending');
+            $table->string('snap_token')->nullable();
             $table->timestamps();
         });
     }
