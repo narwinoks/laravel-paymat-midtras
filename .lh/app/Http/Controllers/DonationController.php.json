@@ -1,0 +1,362 @@
+{
+    "sourceFile": "app/Http/Controllers/DonationController.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 86,
+            "patches": [
+                {
+                    "date": 1668408191078,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1668408197925,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,6 +7,8 @@\n class DonationController extends Controller\n {\n     //\n \n-    public function index()\n+    public function index(Request){\n+\n+    }\n }\n"
+                },
+                {
+                    "date": 1668409195748,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,8 @@\n class DonationController extends Controller\n {\n     //\n \n-    public function index(Request){\n-\n+    public function index(Request $request){\n+        return view('donation')\n     }\n }\n"
+                },
+                {
+                    "date": 1668409827427,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,7 +8,8 @@\n {\n     //\n \n     public function index(Request $request){\n-        return view('donation')\n+        dd(services.midtrans.clientKey)\n+        return view('donation');\n     }\n }\n"
+                },
+                {
+                    "date": 1668409832988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,8 @@\n {\n     //\n \n     public function index(Request $request){\n-        dd(services.midtrans.clientKey)\n+        dd(con)\n         return view('donation');\n     }\n }\n"
+                },
+                {
+                    "date": 1668410713648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,10 @@\n {\n     //\n \n     public function index(Request $request){\n-        dd(con)\n+        dd(config('services.midtrans.clientKey'));\n         return view('donation');\n     }\n+\n+    public function store()\n }\n"
+                },
+                {
+                    "date": 1668410718777,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,6 +12,8 @@\n         dd(config('services.midtrans.clientKey'));\n         return view('donation');\n     }\n \n-    public function store()\n+    public function store(){\n+        \\DB\n+    }\n }\n"
+                },
+                {
+                    "date": 1668410727055,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,7 +13,9 @@\n         return view('donation');\n     }\n \n     public function store(){\n-        \\DB\n+        \\DB::transaction(function () {\n+\n+        });\n     }\n }\n"
+                },
+                {
+                    "date": 1668410775005,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n \n namespace App\\Http\\Controllers;\n \n use Illuminate\\Http\\Request;\n+use Illuminate\\Support\\Facades\\DB;\n \n class DonationController extends Controller\n {\n     //\n"
+                },
+                {
+                    "date": 1668410825003,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,8 @@\n     }\n \n     public function store(){\n         \\DB::transaction(function () {\n-\n+            'transaction_id'\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668410846460,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,8 @@\n     }\n \n     public function store(){\n         \\DB::transaction(function () {\n-            'transaction_id'\n+            'donor_name' =>$request->donor\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668410853794,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,10 @@\n         return view('donation');\n     }\n \n     public function store(){\n-        \\DB::transaction(function () {\n-            'donor_name' =>$request->donor\n+        \\DB::transaction(function () {[\n+            'donor_name' =>$request->donor_name\n+        ]\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668410862866,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,11 @@\n     }\n \n     public function store(){\n         \\DB::transaction(function () {[\n-            'donor_name' =>$request->donor_name\n-        ]\n+            'donor_name' =>$request->donor_name,\n+            'donor_email' =>$request->donor_email,\n+            \n+        ];\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668410877046,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,12 +14,12 @@\n         return view('donation');\n     }\n \n     public function store(){\n-        \\DB::transaction(function () {[\n+        \\DB::transaction(function () use {[\n             'donor_name' =>$request->donor_name,\n             'donor_email' =>$request->donor_email,\n-            \n+\n         ];\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668410892594,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n         return view('donation');\n     }\n \n     public function store(){\n-        \\DB::transaction(function () use {[\n+        \\DB::transaction(function () use ($request) {[\n             'donor_name' =>$request->donor_name,\n             'donor_email' =>$request->donor_email,\n \n         ];\n"
+                },
+                {
+                    "date": 1668410909933,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n         return view('donation');\n     }\n \n     public function store(){\n-        \\DB::transaction(function () use ($request) {[\n+        \\DB::transaction(function() use($request) {\n             'donor_name' =>$request->donor_name,\n             'donor_email' =>$request->donor_email,\n \n         ];\n"
+                },
+                {
+                    "date": 1668410915740,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,10 @@\n     }\n \n     public function store(){\n         \\DB::transaction(function() use($request) {\n-            'donor_name' =>$request->donor_name,\n+\n+[]            'donor_name' =>$request->donor_name,\n             'donor_email' =>$request->donor_email,\n \n         ];\n         });\n"
+                },
+                {
+                    "date": 1668410935136,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n <?php\n \n namespace App\\Http\\Controllers;\n \n+use App\\Donation;\n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\DB;\n \n class DonationController extends Controller\n@@ -15,10 +16,10 @@\n     }\n \n     public function store(){\n         \\DB::transaction(function() use($request) {\n-\n-[]            'donor_name' =>$request->donor_name,\n+        [\n+            $donation=Donation::create()            'donor_name' =>$request->donor_name,\n             'donor_email' =>$request->donor_email,\n \n         ];\n         });\n"
+                },
+                {
+                    "date": 1668410941173,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,11 +17,12 @@\n \n     public function store(){\n         \\DB::transaction(function() use($request) {\n         [\n-            $donation=Donation::create()            'donor_name' =>$request->donor_name,\n-            'donor_email' =>$request->donor_email,\n+            $donation=Donation::create([\n \n+            ])\n+\n         ];\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668410996295,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,10 @@\n     public function store(){\n         \\DB::transaction(function() use($request) {\n         [\n             $donation=Donation::create([\n-\n+                'donor_name' =>$request->donor_name,\n+                'donor_email' =>$request->donor_email,\n             ])\n \n         ];\n         });\n"
+                },
+                {
+                    "date": 1668411003497,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,10 +20,48 @@\n         [\n             $donation=Donation::create([\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n-            ])\n+            ]);\n \n         ];\n         });\n+        \\DB::transaction(function() use($request) {\n+            $donation = Donation::create([\n+                'transaction_id' => \\Str::uuid(),\n+                'donor_name' => $request->donor_name,\n+                'donor_email' => $request->donor_email,\n+                'donation_type' => $request->donation_type,\n+                'amount' => floatval($request->amount),\n+                'note' => $request->note,\n+            ]);\n+\n+            $payload = [\n+                'transaction_details' => [\n+                    'order_id'      => $donation->transaction_id,\n+                    'gross_amount'  => $donation->amount,\n+                ],\n+                'customer_details' => [\n+                    'first_name'    => $donation->donor_name,\n+                    'email'         => $donation->donor_email,\n+                    // 'phone'         => '08888888888',\n+                    // 'address'       => '',\n+                ],\n+                'item_details' => [\n+                    [\n+                        'id'       => $donation->donation_type,\n+                        'price'    => $donation->amount,\n+                        'quantity' => 1,\n+                        'name'     => ucwords(str_replace('_', ' ', $donation->donation_type))\n+                    ]\n+                ]\n+            ];\n+            $snapToken = \\Midtrans\\Snap::getSnapToken($payload);\n+            $donation->snap_token = $snapToken;\n+            $donation->save();\n+\n+            $this->response['snap_token'] = $snapToken;\n+        });\n+\n+        return response()->json($this->response);\n     }\n }\n"
+                },
+                {
+                    "date": 1668411018370,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,8 @@\n     }\n \n     public function store(){\n         \\DB::transaction(function() use($request) {\n-        [\n             $donation=Donation::create([\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n             ]);\n"
+                },
+                {
+                    "date": 1668411027925,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,16 +15,15 @@\n         return view('donation');\n     }\n \n     public function store(){\n-        \\DB::transaction(function() use($request) {\n-            $donation=Donation::create([\n-                'donor_name' =>$request->donor_name,\n-                'donor_email' =>$request->donor_email,\n-            ]);\n+        // \\DB::transaction(function() use($request) {\n+        //     $donation=Donation::create([\n+        //         'donor_name' =>$request->donor_name,\n+        //         'donor_email' =>$request->donor_email,\n+        //     ]);\n \n-        ];\n-        });\n+        // });\n         \\DB::transaction(function() use($request) {\n             $donation = Donation::create([\n                 'transaction_id' => \\Str::uuid(),\n                 'donor_name' => $request->donor_name,\n"
+                },
+                {
+                    "date": 1668411044607,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,15 +15,15 @@\n         return view('donation');\n     }\n \n     public function store(){\n-        // \\DB::transaction(function() use($request) {\n-        //     $donation=Donation::create([\n-        //         'donor_name' =>$request->donor_name,\n-        //         'donor_email' =>$request->donor_email,\n-        //     ]);\n+        \\DB::transaction(function() use($request) {\n+            $donation=Donation::create([\n+                'donor_name' =>$request->donor_name,\n+                'donor_email' =>$request->donor_email,\n+            ]);\n \n-        // });\n+        });\n         \\DB::transaction(function() use($request) {\n             $donation = Donation::create([\n                 'transaction_id' => \\Str::uuid(),\n                 'donor_name' => $request->donor_name,\n"
+                },
+                {
+                    "date": 1668411051452,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n         dd(config('services.midtrans.clientKey'));\n         return view('donation');\n     }\n \n-    public function store(){\n+    public function store(Request $request){\n         \\DB::transaction(function() use($request) {\n             $donation=Donation::create([\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n"
+                },
+                {
+                    "date": 1668411061024,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,44 +22,7 @@\n                 'donor_email' =>$request->donor_email,\n             ]);\n \n         });\n-        \\DB::transaction(function() use($request) {\n-            $donation = Donation::create([\n-                'transaction_id' => \\Str::uuid(),\n-                'donor_name' => $request->donor_name,\n-                'donor_email' => $request->donor_email,\n-                'donation_type' => $request->donation_type,\n-                'amount' => floatval($request->amount),\n-                'note' => $request->note,\n-            ]);\n-\n-            $payload = [\n-                'transaction_details' => [\n-                    'order_id'      => $donation->transaction_id,\n-                    'gross_amount'  => $donation->amount,\n-                ],\n-                'customer_details' => [\n-                    'first_name'    => $donation->donor_name,\n-                    'email'         => $donation->donor_email,\n-                    // 'phone'         => '08888888888',\n-                    // 'address'       => '',\n-                ],\n-                'item_details' => [\n-                    [\n-                        'id'       => $donation->donation_type,\n-                        'price'    => $donation->amount,\n-                        'quantity' => 1,\n-                        'name'     => ucwords(str_replace('_', ' ', $donation->donation_type))\n-                    ]\n-                ]\n-            ];\n-            $snapToken = \\Midtrans\\Snap::getSnapToken($payload);\n-            $donation->snap_token = $snapToken;\n-            $donation->save();\n-\n-            $this->response['snap_token'] = $snapToken;\n-        });\n-\n-        return response()->json($this->response);\n+       \n     }\n }\n"
+                },
+                {
+                    "date": 1668411067453,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,7 +22,7 @@\n                 'donor_email' =>$request->donor_email,\n             ]);\n \n         });\n-       \n+       //replace \n     }\n }\n"
+                },
+                {
+                    "date": 1668411074387,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,7 +22,6 @@\n                 'donor_email' =>$request->donor_email,\n             ]);\n \n         });\n-       //replace \n     }\n }\n"
+                },
+                {
+                    "date": 1668411104968,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n         \\DB::transaction(function() use($request) {\n             $donation=Donation::create([\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n+                'dona'\n             ]);\n \n         });\n     }\n"
+                },
+                {
+                    "date": 1668411115609,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,10 @@\n         \\DB::transaction(function() use($request) {\n             $donation=Donation::create([\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n-                'dona'\n+                'donation_type' =>$request->donation_type,\n+                \n             ]);\n \n         });\n     }\n"
+                },
+                {
+                    "date": 1668411131350,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n             $donation=Donation::create([\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n                 'donation_type' =>$request->donation_type,\n-                \n+                'amount' =>$request->amount\n             ]);\n \n         });\n     }\n"
+                },
+                {
+                    "date": 1668411138363,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n             $donation=Donation::create([\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n                 'donation_type' =>$request->donation_type,\n-                'amount' =>$request->amount\n+                'amount' =>floatval $request->amount\n             ]);\n \n         });\n     }\n"
+                },
+                {
+                    "date": 1668411145029,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n             $donation=Donation::create([\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n                 'donation_type' =>$request->donation_type,\n-                'amount' =>floatval $request->amount\n+                'amount' =>floatval() $request->amount\n             ]);\n \n         });\n     }\n"
+                },
+                {
+                    "date": 1668411153173,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,10 @@\n             $donation=Donation::create([\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n                 'donation_type' =>$request->donation_type,\n-                'amount' =>floatval() $request->amount\n+                'amount' =>floatval($request->amount),\n+                \n             ]);\n \n         });\n     }\n"
+                },
+                {
+                    "date": 1668411160932,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n                 'donation_type' =>$request->donation_type,\n                 'amount' =>floatval($request->amount),\n-                \n+                'note'\n             ]);\n \n         });\n     }\n"
+                },
+                {
+                    "date": 1668411166395,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,10 +21,11 @@\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n                 'donation_type' =>$request->donation_type,\n                 'amount' =>floatval($request->amount),\n-                'note'\n+                'note'=>$request->note\n             ]);\n \n+            \n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668411175853,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,8 @@\n                 'amount' =>floatval($request->amount),\n                 'note'=>$request->note\n             ]);\n \n-            \n+            $payload=\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668411200633,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,10 @@\n                 'amount' =>floatval($request->amount),\n                 'note'=>$request->note\n             ]);\n \n-            $payload=\n+            $payload=[\n+                'transaction' =>\n+            ]\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668411206521,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,11 @@\n                 'note'=>$request->note\n             ]);\n \n             $payload=[\n-                'transaction' =>\n+                'transaction_detail' =>[\n+                    \n+                ]\n             ]\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668411212038,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n             ]);\n \n             $payload=[\n                 'transaction_detail' =>[\n-                    \n+\n                 ]\n             ]\n         });\n     }\n"
+                },
+                {
+                    "date": 1668413069979,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,10 +26,10 @@\n             ]);\n \n             $payload=[\n                 'transaction_detail' =>[\n-\n+                    'order_id'\n                 ]\n-            ]\n+            ];\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668413077956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n             ]);\n \n             $payload=[\n                 'transaction_detail' =>[\n-                    'order_id'\n+                    'order_id'=>'SANBOX' .uni\n                 ]\n             ];\n         });\n     }\n"
+                },
+                {
+                    "date": 1668413083733,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n             ]);\n \n             $payload=[\n                 'transaction_detail' =>[\n-                    'order_id'=>'SANBOX' .uni\n+                    'order_id'=>'SANBOX' . /uniqid(),\n                 ]\n             ];\n         });\n     }\n"
+                },
+                {
+                    "date": 1668413089862,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,10 @@\n             ]);\n \n             $payload=[\n                 'transaction_detail' =>[\n-                    'order_id'=>'SANBOX' . /uniqid(),\n+                    'order_id'=>'SANBOX' . uniqid(),\n+                    \n                 ]\n             ];\n         });\n     }\n"
+                },
+                {
+                    "date": 1668415764252,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n \n             $payload=[\n                 'transaction_detail' =>[\n                     'order_id'=>'SANBOX' . uniqid(),\n-                    \n+                    'gross_amount'=>$donation->\n                 ]\n             ];\n         });\n     }\n"
+                },
+                {
+                    "date": 1668415772621,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,10 +27,11 @@\n \n             $payload=[\n                 'transaction_detail' =>[\n                     'order_id'=>'SANBOX' . uniqid(),\n-                    'gross_amount'=>$donation->\n-                ]\n+                    'gross_amount'=>$donation->amount\n+                ],\n+                \n             ];\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668415784584,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n                 'transaction_detail' =>[\n                     'order_id'=>'SANBOX' . uniqid(),\n                     'gross_amount'=>$donation->amount\n                 ],\n-                \n+                'custom'\n             ];\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668415791075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,11 @@\n                 'transaction_detail' =>[\n                     'order_id'=>'SANBOX' . uniqid(),\n                     'gross_amount'=>$donation->amount\n                 ],\n-                'custom'\n+                'custom_details' =>[\n+                    \n+                ]\n             ];\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668415832586,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n                     'order_id'=>'SANBOX' . uniqid(),\n                     'gross_amount'=>$donation->amount\n                 ],\n                 'custom_details' =>[\n-                    \n+                    'firs'\n                 ]\n             ];\n         });\n     }\n"
+                },
+                {
+                    "date": 1668415841128,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,10 @@\n                     'order_id'=>'SANBOX' . uniqid(),\n                     'gross_amount'=>$donation->amount\n                 ],\n                 'custom_details' =>[\n-                    'firs'\n+                    'first_name' =>$donation->name,\n+                    'email' =>$donation->email\n                 ]\n             ];\n         });\n     }\n"
+                },
+                {
+                    "date": 1668415884614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,10 @@\n                 ],\n                 'custom_details' =>[\n                     'first_name' =>$donation->name,\n                     'email' =>$donation->email\n-                ]\n+                ],\n+                \n             ];\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668415899917,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n                 'custom_details' =>[\n                     'first_name' =>$donation->name,\n                     'email' =>$donation->email\n                 ],\n-                \n+                'items_Deta'\n             ];\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668415909848,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,13 @@\n                 'custom_details' =>[\n                     'first_name' =>$donation->name,\n                     'email' =>$donation->email\n                 ],\n-                'items_Deta'\n+                'items_details' =>[\n+                    [\n+                        \n+                    ]\n+                ]\n             ];\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668415919502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n                     'email' =>$donation->email\n                 ],\n                 'items_details' =>[\n                     [\n-                        \n+                        'id'\n                     ]\n                 ]\n             ];\n         });\n"
+                },
+                {
+                    "date": 1668415928164,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n                     'email' =>$donation->email\n                 ],\n                 'items_details' =>[\n                     [\n-                        'id'\n+                        'id'=>$donation->dona\n                     ]\n                 ]\n             ];\n         });\n"
+                },
+                {
+                    "date": 1668415933481,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,10 @@\n                     'email' =>$donation->email\n                 ],\n                 'items_details' =>[\n                     [\n-                        'id'=>$donation->dona\n+                        'id'=>$donation->donation_type,\n+                        ''\n                     ]\n                 ]\n             ];\n         });\n"
+                },
+                {
+                    "date": 1668415939543,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n                 ],\n                 'items_details' =>[\n                     [\n                         'id'=>$donation->donation_type,\n-                        ''\n+                        'proce'\n                     ]\n                 ]\n             ];\n         });\n"
+                },
+                {
+                    "date": 1668415959990,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n                 ],\n                 'items_details' =>[\n                     [\n                         'id'=>$donation->donation_type,\n-                        'proce'\n+                        'price'=>$donation->amount\n                     ]\n                 ]\n             ];\n         });\n"
+                },
+                {
+                    "date": 1668415965685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,10 @@\n                 ],\n                 'items_details' =>[\n                     [\n                         'id'=>$donation->donation_type,\n-                        'price'=>$donation->amount\n+                        'price'=>$donation->amount,\n+                        'quantity'=>1\n                     ]\n                 ]\n             ];\n         });\n"
+                },
+                {
+                    "date": 1668416023085,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,10 @@\n                 'items_details' =>[\n                     [\n                         'id'=>$donation->donation_type,\n                         'price'=>$donation->amount,\n-                        'quantity'=>1\n+                        'quantity'=>1,\n+                        'name'=>str\n                     ]\n                 ]\n             ];\n         });\n"
+                },
+                {
+                    "date": 1668416029795,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n                     [\n                         'id'=>$donation->donation_type,\n                         'price'=>$donation->amount,\n                         'quantity'=>1,\n-                        'name'=>str\n+                        'name'=>ucw\n                     ]\n                 ]\n             ];\n         });\n"
+                },
+                {
+                    "date": 1668416043589,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n                     [\n                         'id'=>$donation->donation_type,\n                         'price'=>$donation->amount,\n                         'quantity'=>1,\n-                        'name'=>ucw\n+                        'name'=>ucwords('-',)\n                     ]\n                 ]\n             ];\n         });\n"
+                },
+                {
+                    "date": 1668416050033,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n                     [\n                         'id'=>$donation->donation_type,\n                         'price'=>$donation->amount,\n                         'quantity'=>1,\n-                        'name'=>ucwords('-',)\n+                        'name'=>ucwords('-','')\n                     ]\n                 ]\n             ];\n         });\n"
+                },
+                {
+                    "date": 1668416061394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n                     [\n                         'id'=>$donation->donation_type,\n                         'price'=>$donation->amount,\n                         'quantity'=>1,\n-                        'name'=>ucwords('-','')\n+                        'name'=>ucwords('-','',$donation->donation_type)\n                     ]\n                 ]\n             ];\n         });\n"
+                },
+                {
+                    "date": 1668416722998,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,6 +43,8 @@\n                     ]\n                 ]\n             ];\n         });\n+\n+        \n     }\n }\n"
+                },
+                {
+                    "date": 1668416729589,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,7 +44,7 @@\n                 ]\n             ];\n         });\n \n-        \n+        $snapToken=\n     }\n }\n"
+                },
+                {
+                    "date": 1668416745299,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,7 +44,7 @@\n                 ]\n             ];\n         });\n \n-        $snapToken=\n+        $snapToken= \\Midtrans\\Snap::getSnapToken($payload)\n     }\n }\n"
+                },
+                {
+                    "date": 1668416759036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n                         'name'=>ucwords('-','',$donation->donation_type)\n                     ]\n                 ]\n             ];\n+            $snapToken= \\Midtrans\\Snap::getSnapToken($payload);\n         });\n \n-        $snapToken= \\Midtrans\\Snap::getSnapToken($payload)\n     }\n }\n"
+                },
+                {
+                    "date": 1668416786889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,8 +43,9 @@\n                     ]\n                 ]\n             ];\n             $snapToken= \\Midtrans\\Snap::getSnapToken($payload);\n+            $donation->sna\n         });\n \n     }\n }\n"
+                },
+                {
+                    "date": 1668416792957,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n                     ]\n                 ]\n             ];\n             $snapToken= \\Midtrans\\Snap::getSnapToken($payload);\n-            $donation->sna\n+            $donation->snap_token=\n         });\n \n     }\n }\n"
+                },
+                {
+                    "date": 1668416833625,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,10 @@\n                     ]\n                 ]\n             ];\n             $snapToken= \\Midtrans\\Snap::getSnapToken($payload);\n-            $donation->snap_token=\n+            $donation->snap_token=$snapToken;\n+            $donation->save\n         });\n \n     }\n }\n"
+                },
+                {
+                    "date": 1668416853038,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,10 @@\n                 ]\n             ];\n             $snapToken= \\Midtrans\\Snap::getSnapToken($payload);\n             $donation->snap_token=$snapToken;\n-            $donation->save\n+            $donation->save();\n+            $this->res\n         });\n \n     }\n }\n"
+                },
+                {
+                    "date": 1668416868064,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n             ];\n             $snapToken= \\Midtrans\\Snap::getSnapToken($payload);\n             $donation->snap_token=$snapToken;\n             $donation->save();\n-            $this->res\n+            $this->response['snap_token']=$donation->snap_token;\n         });\n \n     }\n }\n"
+                },
+                {
+                    "date": 1668416876929,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n             ];\n             $snapToken= \\Midtrans\\Snap::getSnapToken($payload);\n             $donation->snap_token=$snapToken;\n             $donation->save();\n-            $this->response['snap_token']=$donation->snap_token;\n+            $this->response['snap_token']=$s;\n         });\n \n     }\n }\n"
+                },
+                {
+                    "date": 1668416908462,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,12 @@\n             ];\n             $snapToken= \\Midtrans\\Snap::getSnapToken($payload);\n             $donation->snap_token=$snapToken;\n             $donation->save();\n-            $this->response['snap_token']=$s;\n+            $this->response['snap_token']=$snapToken;\n+\n         });\n \n+        return $this->response;\n+\n     }\n }\n"
+                },
+                {
+                    "date": 1668416925717,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,8 +49,8 @@\n             $this->response['snap_token']=$snapToken;\n \n         });\n \n-        return $this->response;\n+        return $this->response()->json;\n \n     }\n }\n"
+                },
+                {
+                    "date": 1668416932282,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,8 +49,8 @@\n             $this->response['snap_token']=$snapToken;\n \n         });\n \n-        return $this->response()->json;\n+        return $this->response()->json($this->response);\n \n     }\n }\n"
+                },
+                {
+                    "date": 1668417217695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n {\n     //\n \n     public function index(Request $request){\n-        dd(config('services.midtrans.clientKey'));\n+        // dd(config('services.midtrans.clientKey'));\n         return view('donation');\n     }\n \n     public function store(Request $request){\n"
+                },
+                {
+                    "date": 1668418340644,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,5 +52,7 @@\n \n         return $this->response()->json($this->response);\n \n     }\n+\n+    public function notification()\n }\n"
+                },
+                {
+                    "date": 1668419000338,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,16 @@\n class DonationController extends Controller\n {\n     //\n \n+    public function __construct()\n+{\n+   \\Midtrans\\Config::$serverKey = config('services.midtrans.serverKey');\n+   \\Midtrans\\Config::$isProduction = config('services.midtrans.isProduction');\n+   \\Midtrans\\Config::$isSanitized = config('services.midtrans.isSanitized');\n+   \\Midtrans\\Config::$is3ds = config('services.midtrans.is3ds');\n+}\n+\n     public function index(Request $request){\n         // dd(config('services.midtrans.clientKey'));\n         return view('donation');\n     }\n@@ -53,6 +61,8 @@\n         return $this->response()->json($this->response);\n \n     }\n \n-    public function notification()\n+    public function notification(){\n+\n+    }\n }\n"
+                },
+                {
+                    "date": 1668420070032,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n                     [\n                         'id'=>$donation->donation_type,\n                         'price'=>$donation->amount,\n                         'quantity'=>1,\n-                        'name'=>ucwords('-','',$donation->donation_type)\n+                        'name'     => ucwords(str_replace('_', ' ', $donation->donation_type))\n                     ]\n                 ]\n             ];\n             $snapToken= \\Midtrans\\Snap::getSnapToken($payload);\n"
+                },
+                {
+                    "date": 1668515307526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n         return view('donation');\n     }\n \n     public function store(Request $request){\n+        dd($request->all())\n         \\DB::transaction(function() use($request) {\n             $donation=Donation::create([\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n"
+                },
+                {
+                    "date": 1668515981850,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,14 +23,14 @@\n         return view('donation');\n     }\n \n     public function store(Request $request){\n-        dd($request->all())\n+        dd($request->all());\n         \\DB::transaction(function() use($request) {\n             $donation=Donation::create([\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n-                'donation_type' =>$request->donation_type,\n+                'donor_name' =>$request->donation_type,\n                 'amount' =>floatval($request->amount),\n                 'note'=>$request->note\n             ]);\n \n"
+                },
+                {
+                    "date": 1668516064948,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,14 +23,14 @@\n         return view('donation');\n     }\n \n     public function store(Request $request){\n-        dd($request->all());\n+        // dd($request->all());\n         \\DB::transaction(function() use($request) {\n             $donation=Donation::create([\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n-                'donor_name' =>$request->donation_type,\n+                'donation_type' =>$request->donation_type,\n                 'amount' =>floatval($request->amount),\n                 'note'=>$request->note\n             ]);\n \n"
+                },
+                {
+                    "date": 1668516103021,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n \n             $payload=[\n                 'transaction_detail' =>[\n                     'order_id'=>'SANBOX' . uniqid(),\n-                    'gross_amount'=>$donation->amount\n+                    'gross_amount'=>\n                 ],\n                 'custom_details' =>[\n                     'first_name' =>$donation->name,\n                     'email' =>$donation->email\n"
+                },
+                {
+                    "date": 1668516125787,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n \n             $payload=[\n                 'transaction_detail' =>[\n                     'order_id'=>'SANBOX' . uniqid(),\n-                    'gross_amount'=>\n+                    'gross_amount'=>$donation->amount\n                 ],\n                 'custom_details' =>[\n                     'first_name' =>$donation->name,\n                     'email' =>$donation->email\n"
+                },
+                {
+                    "date": 1668516205451,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n                 'note'=>$request->note\n             ]);\n \n             $payload=[\n-                'transaction_detail' =>[\n+                'transaction_details' =>[\n                     'order_id'=>'SANBOX' . uniqid(),\n                     'gross_amount'=>$donation->amount\n                 ],\n                 'custom_details' =>[\n@@ -58,9 +58,9 @@\n             $this->response['snap_token']=$snapToken;\n \n         });\n \n-        return $this->response()->json($this->response);\n+        return response()->json($this->response);\n \n     }\n \n     public function notification(){\n"
+                }
+            ],
+            "date": 1668408191078,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Controllers;\n\nuse Illuminate\\Http\\Request;\n\nclass DonationController extends Controller\n{\n    //\n\n    public function index()\n}\n"
+        }
+    ]
+}

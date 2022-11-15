@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1668349413691,
@@ -16,6 +16,26 @@
                 {
                     "date": 1668349433146,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,10 @@\n     public function up()\n     {\n         Schema::create('donations', function (Blueprint $table) {\n             $table->bigIncrements('id');\n-            $table->string('donor_name')\n+            $table->string('donor_name')->nullable();\n+            $table->string('donor_name')->nullable();\n             $table->timestamps();\n         });\n     }\n \n"
+                },
+                {
+                    "date": 1668407798863,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,10 @@\n     {\n         Schema::create('donations', function (Blueprint $table) {\n             $table->bigIncrements('id');\n             $table->string('donor_name')->nullable();\n-            $table->string('donor_name')->nullable();\n+            $table->string('donor_email')->nullable();\n+            $table->string('donor_\n             $table->timestamps();\n         });\n     }\n \n"
+                },
+                {
+                    "date": 1668407815454,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n         Schema::create('donations', function (Blueprint $table) {\n             $table->bigIncrements('id');\n             $table->string('donor_name')->nullable();\n             $table->string('donor_email')->nullable();\n-            $table->string('donor_\n+            $table->string('dononation_type')->nullable();\n             $table->timestamps();\n         });\n     }\n \n"
+                },
+                {
+                    "date": 1668407828737,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n             $table->bigIncrements('id');\n             $table->string('donor_name')->nullable();\n             $table->string('donor_email')->nullable();\n             $table->string('dononation_type')->nullable();\n+            $table->dec\n             $table->timestamps();\n         });\n     }\n \n"
+                },
+                {
+                    "date": 1668407835755,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n             $table->bigIncrements('id');\n             $table->string('donor_name')->nullable();\n             $table->string('donor_email')->nullable();\n             $table->string('dononation_type')->nullable();\n-            $table->dec\n+            $table->decimal('amount',)\n             $table->timestamps();\n         });\n     }\n \n"
+                },
+                {
+                    "date": 1668407842323,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n             $table->bigIncrements('id');\n             $table->string('donor_name')->nullable();\n             $table->string('donor_email')->nullable();\n             $table->string('dononation_type')->nullable();\n-            $table->decimal('amount',20,2)->de\n+            $table->decimal('amount',20,2)->def\n             $table->timestamps();\n         });\n     }\n \n"
                 }
             ],
             "date": 1668349413691,

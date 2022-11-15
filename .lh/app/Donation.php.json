@@ -1,0 +1,26 @@
+{
+    "sourceFile": "app/Donation.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1668408006769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1668408013108,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,6 +7,6 @@\n class Donation extends Model\n {\n     //\n \n-    protected \n+    protected $guarded=[]\n }\n"
+                },
+                {
+                    "date": 1668408052227,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,6 +7,44 @@\n class Donation extends Model\n {\n     //\n \n-    protected $guarded=[]\n+    protected $guarded=[];\n+    public function setStatusPending()\n+    {\n+        $this->attributes['status'] = 'pending';\n+        self::save();\n+    }\n+\n+    /**\n+     * Set status to Success\n+     *\n+     * @return void\n+     */\n+    public function setStatusSuccess()\n+    {\n+        $this->attributes['status'] = 'success';\n+        self::save();\n+    }\n+\n+    /**\n+     * Set status to Failed\n+     *\n+     * @return void\n+     */\n+    public function setStatusFailed()\n+    {\n+        $this->attributes['status'] = 'failed';\n+        self::save();\n+    }\n+\n+    /**\n+     * Set status to Expired\n+     *\n+     * @return void\n+     */\n+    public function setStatusExpired()\n+    {\n+        $this->attributes['status'] = 'expired';\n+        self::save();\n+    }\n }\n"
+                }
+            ],
+            "date": 1668408006769,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass Donation extends Model\n{\n    //\n\n    protected \n}\n"
+        }
+    ]
+}
