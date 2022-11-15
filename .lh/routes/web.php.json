@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 19,
+            "activePatchIndex": 20,
             "patches": [
                 {
                     "date": 1668408148103,
@@ -84,6 +84,10 @@
                 {
                     "date": 1668518506043,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,6 @@\n Route::get('/', function () {\n     return view('welcome');\n });\n Route::get('/donation', 'DonationController@index')->name('donation.index');\n-Route::pos('/donation', 'DonationController@store')->name('donation.post');\n+\n+Route::post('/donation', 'DonationController@store')->name('donation.post');\n"
+                },
+                {
+                    "date": 1668519065716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,6 +14,5 @@\n Route::get('/', function () {\n     return view('welcome');\n });\n Route::get('/donation', 'DonationController@index')->name('donation.index');\n-\n Route::post('/donation', 'DonationController@store')->name('donation.post');\n"
                 }
             ],
             "date": 1668408148103,
