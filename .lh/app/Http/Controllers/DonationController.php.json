@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 86,
+            "activePatchIndex": 122,
             "patches": [
                 {
                     "date": 1668408191078,
@@ -352,6 +352,150 @@
                 {
                     "date": 1668516205451,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n                 'note'=>$request->note\n             ]);\n \n             $payload=[\n-                'transaction_detail' =>[\n+                'transaction_details' =>[\n                     'order_id'=>'SANBOX' . uniqid(),\n                     'gross_amount'=>$donation->amount\n                 ],\n                 'custom_details' =>[\n@@ -58,9 +58,9 @@\n             $this->response['snap_token']=$snapToken;\n \n         });\n \n-        return $this->response()->json($this->response);\n+        return response()->json($this->response);\n \n     }\n \n     public function notification(){\n"
+                },
+                {
+                    "date": 1668521286332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,9 @@\n     public function store(Request $request){\n         // dd($request->all());\n         \\DB::transaction(function() use($request) {\n             $donation=Donation::create([\n+                ''\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n                 'donation_type' =>$request->donation_type,\n                 'amount' =>floatval($request->amount),\n"
+                },
+                {
+                    "date": 1668521292455,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n     public function store(Request $request){\n         // dd($request->all());\n         \\DB::transaction(function() use($request) {\n             $donation=Donation::create([\n-                ''\n+                'donation-code' =>\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n                 'donation_type' =>$request->donation_type,\n                 'amount' =>floatval($request->amount),\n"
+                },
+                {
+                    "date": 1668521301551,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n     public function store(Request $request){\n         // dd($request->all());\n         \\DB::transaction(function() use($request) {\n             $donation=Donation::create([\n-                'donation-code' =>\n+                'donation_code' =>\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n                 'donation_type' =>$request->donation_type,\n                 'amount' =>floatval($request->amount),\n@@ -36,9 +36,9 @@\n             ]);\n \n             $payload=[\n                 'transaction_details' =>[\n-                    'order_id'=>'SANBOX' . uniqid(),\n+                    'order_id'=>,\n                     'gross_amount'=>$donation->amount\n                 ],\n                 'custom_details' =>[\n                     'first_name' =>$donation->name,\n"
+                },
+                {
+                    "date": 1668521309060,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n     public function store(Request $request){\n         // dd($request->all());\n         \\DB::transaction(function() use($request) {\n             $donation=Donation::create([\n-                'donation_code' =>\n+                'donation_code' =>'SANBOX' . uniqid(),\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n                 'donation_type' =>$request->donation_type,\n                 'amount' =>floatval($request->amount),\n@@ -36,9 +36,9 @@\n             ]);\n \n             $payload=[\n                 'transaction_details' =>[\n-                    'order_id'=>,\n+                    'order_id'=>$donation,\n                     'gross_amount'=>$donation->amount\n                 ],\n                 'custom_details' =>[\n                     'first_name' =>$donation->name,\n"
+                },
+                {
+                    "date": 1668521316668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n             ]);\n \n             $payload=[\n                 'transaction_details' =>[\n-                    'order_id'=>$donation,\n+                    'order_id'=>$donation->donation_code,\n                     'gross_amount'=>$donation->amount\n                 ],\n                 'custom_details' =>[\n                     'first_name' =>$donation->name,\n"
+                },
+                {
+                    "date": 1668521346689,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,7 +64,7 @@\n \n     }\n \n     public function notification(){\n-\n+        \n     }\n }\n"
+                },
+                {
+                    "date": 1668521381518,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,7 +64,8 @@\n \n     }\n \n     public function notification(){\n-        \n+        $notif = new \\Midtrans\\Notification();\n+\n     }\n }\n"
+                },
+                {
+                    "date": 1668521404015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,7 +65,7 @@\n     }\n \n     public function notification(){\n         $notif = new \\Midtrans\\Notification();\n-\n+        DB\n     }\n }\n"
+                },
+                {
+                    "date": 1668521409098,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,7 +65,7 @@\n     }\n \n     public function notification(){\n         $notif = new \\Midtrans\\Notification();\n-        DB\n+        DB::tra\n     }\n }\n"
+                },
+                {
+                    "date": 1668521415418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     }\n \n     public function store(Request $request){\n         // dd($request->all());\n-        \\DB::transaction(function() use($request) {\n+        DB::transaction(function() use($request) {\n             $donation=Donation::create([\n                 'donation_code' =>'SANBOX' . uniqid(),\n                 'donor_name' =>$request->donor_name,\n                 'donor_email' =>$request->donor_email,\n@@ -65,7 +65,9 @@\n     }\n \n     public function notification(){\n         $notif = new \\Midtrans\\Notification();\n-        DB::tra\n+        DB::transaction(function () {\n+\n+        });\n     }\n }\n"
+                },
+                {
+                    "date": 1668521425869,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,9 +65,9 @@\n     }\n \n     public function notification(){\n         $notif = new \\Midtrans\\Notification();\n-        DB::transaction(function () {\n+        DB::transaction(function () use ( {\n \n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668521431595,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,9 +65,9 @@\n     }\n \n     public function notification(){\n         $notif = new \\Midtrans\\Notification();\n-        DB::transaction(function () use ( {\n+        DB::transaction(function () use ($notif) {\n \n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668521446665,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,8 +66,8 @@\n \n     public function notification(){\n         $notif = new \\Midtrans\\Notification();\n         DB::transaction(function () use ($notif) {\n-\n+            $transaction_stat\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668521451923,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,8 +66,8 @@\n \n     public function notification(){\n         $notif = new \\Midtrans\\Notification();\n         DB::transaction(function () use ($notif) {\n-            $transaction_stat\n+            $transaction_status =$notif\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668521464384,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,8 +66,8 @@\n \n     public function notification(){\n         $notif = new \\Midtrans\\Notification();\n         DB::transaction(function () use ($notif) {\n-            $transaction_status =$notif\n+            $transaction_status =$notif-transaction_status\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668521470397,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,8 +66,9 @@\n \n     public function notification(){\n         $notif = new \\Midtrans\\Notification();\n         DB::transaction(function () use ($notif) {\n-            $transaction_status =$notif-transaction_status\n+            $transaction_status =$notif->transaction_status;\n+            $transaction_status =$notif->transaction_status;\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668521482467,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n \n     public function notification(){\n         $notif = new \\Midtrans\\Notification();\n         DB::transaction(function () use ($notif) {\n+            $transactionStatus =$notif->transaction_status;\n             $transaction_status =$notif->transaction_status;\n-            $transaction_status =$notif->transaction_status;\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668521487671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,8 +67,8 @@\n     public function notification(){\n         $notif = new \\Midtrans\\Notification();\n         DB::transaction(function () use ($notif) {\n             $transactionStatus =$notif->transaction_status;\n-            $transaction_status =$notif->transaction_status;\n+            $transactionTYpe =$notif->transaction_status;\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668521496623,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,8 +67,9 @@\n     public function notification(){\n         $notif = new \\Midtrans\\Notification();\n         DB::transaction(function () use ($notif) {\n             $transactionStatus =$notif->transaction_status;\n-            $transactionTYpe =$notif->transaction_status;\n+            $transactionType =$notif->transaction_status;\n+            $orderID\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668521503138,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,8 +68,8 @@\n         $notif = new \\Midtrans\\Notification();\n         DB::transaction(function () use ($notif) {\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n-            $orderID\n+            $orderID=$notif->order_id;\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668523491881,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,7 +69,8 @@\n         DB::transaction(function () use ($notif) {\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n+            \n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668523499978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,8 +69,8 @@\n         DB::transaction(function () use ($notif) {\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n-            \n+            $fraudStatus\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668523505190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,8 +69,8 @@\n         DB::transaction(function () use ($notif) {\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n-            $fraudStatus\n+            $fraudStatus=>$\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668523514587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,8 +69,8 @@\n         DB::transaction(function () use ($notif) {\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n-            $fraudStatus=>$\n+            $fraudStatus=>$notif->fraud_status\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668523522752,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,8 +69,8 @@\n         DB::transaction(function () use ($notif) {\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n-            $fraudStatus=>$notif->fraud_status\n+            $fraudStatus=$notif->fraud_status\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668523528016,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,8 +69,9 @@\n         DB::transaction(function () use ($notif) {\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n-            $fraudStatus=$notif->fraud_status\n+            $fraudStatus=$notif->fraud_status;\n+            \n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668523541095,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,8 +70,8 @@\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n             $fraudStatus=$notif->fraud_status;\n-            \n+            $\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668523546761,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,8 +70,8 @@\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n             $fraudStatus=$notif->fraud_status;\n-            $\n+            $donation\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668523553628,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,8 +70,8 @@\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n             $fraudStatus=$notif->fraud_status;\n-            $donation\n+            $donation=Donation\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668523560444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,8 +70,8 @@\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n             $fraudStatus=$notif->fraud_status;\n-            $donation=Donation\n+            $donation=Donation::where('donation')\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668523567159,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,8 +70,8 @@\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n             $fraudStatus=$notif->fraud_status;\n-            $donation=Donation::where('donation')\n+            $donation=Donation::where('donation_code'.$orderID)\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668523573215,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,8 +70,8 @@\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n             $fraudStatus=$notif->fraud_status;\n-            $donation=Donation::where('donation_code'.$orderID)\n+            $donation=Donation::where('donation_code'.$orderID)->first\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668529347191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,8 +70,10 @@\n             $transactionStatus =$notif->transaction_status;\n             $transactionType =$notif->transaction_status;\n             $orderID=$notif->order_id;\n             $fraudStatus=$notif->fraud_status;\n-            $donation=Donation::where('donation_code'.$orderID)->first\n+            $donation=Donation::where('donation_code'.$orderID)->first();\n+\n+            if\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668529352607,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,8 +72,10 @@\n             $orderID=$notif->order_id;\n             $fraudStatus=$notif->fraud_status;\n             $donation=Donation::where('donation_code'.$orderID)->first();\n \n-            if\n+            if ($transactionType ==) {\n+                # code...\n+            }\n         });\n     }\n }\n"
+                },
+                {
+                    "date": 1668529358216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,9 +72,9 @@\n             $orderID=$notif->order_id;\n             $fraudStatus=$notif->fraud_status;\n             $donation=Donation::where('donation_code'.$orderID)->first();\n \n-            if ($transactionStatud ==) {\n+            if ($transactionStatu ==) {\n                 # code...\n             }\n         });\n     }\n"
+                },
+                {
+                    "date": 1668529591626,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n \n             if ($transactionStatus == \"capture\") {\n                 if ($paymetType == \"credit_card\") {\n                     if ($fraudStatus == \"challenge\") {\n-                        $donation->set\n+                        $donation->setS\n                     }\n                     # code...\n                 }\n             }\n"
                 }
             ],
             "date": 1668408191078,
