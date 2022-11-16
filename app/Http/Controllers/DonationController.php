@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Donation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\Storage;
 
 class DonationController extends Controller
 {
@@ -64,37 +65,61 @@ class DonationController extends Controller
 
     }
 
-    public function notification(){
-        $notif = new \Midtrans\Notification();
-        DB::transaction(function () use ($notif) {
-            $transactionStatus =$notif->transaction_status;
-            $paymetType =$notif->payment_type;
-            $orderID=$notif->order_id;
-            $fraudStatus=$notif->fraud_status;
-            $donation=Donation::where('donation_code'.$orderID)->first();
+    public function notification(Request $request)
+    {
+        $donation = Donation::first();
+        $donation->setStatusSuccess();
+        // try {
+        //     //code...
+        //     $notif = new \Midtrans\Notification();
 
-            if ($transactionStatus == "capture") {
-                if ($paymetType == "credit_card") {
-                    if ($fraudStatus == "challenge") {
-                        $donation->setStatusPending();
-                    }else{
-                        $donation->setStatusSuccess();
-                    }
-                    # code...
-                }elseif($transactionStatus == "settlement") {
-                    $donation->setStatusSuccess();
-                }elseif($transactionStatus == "pending") {
-                    $donation->setStatusPending();
-                }elseif($transactionStatus == "deny"){
-                    $donation->setStatusFailed();
+        //     \DB::transaction(function() use($notif) {
 
-                }elseif($transactionStatus == "expire") {
-                    $donation->setStatusExpired();
-                }
-                elseif($transactionStatus == "cancel") {
-                    $donation->setStatusFailed();
-                }
-            }
-        });
+        //       $transaction = $notif->transaction_status;
+        //       $type = $notif->payment_type;
+        //       $orderId = $notif->order_id;
+        //       $fraud = $notif->fraud_status;
+        //       $donation = Donation::where('transaction_id', $orderId)->first();
+
+        //       if ($transaction == 'capture') {
+        //         if ($type == 'credit_card') {
+
+        //           if($fraud == 'challenge') {
+        //             $donation->setStatusPending();
+        //           } else {
+        //             $donation->setStatusSuccess();
+        //           }
+
+        //         }
+        //       } elseif ($transaction == 'settlement') {
+
+        //         $donation->setStatusSuccess();
+
+        //       } elseif($transaction == 'pending'){
+
+        //           $donation->setStatusPending();
+
+        //       } elseif ($transaction == 'deny') {
+
+        //           $donation->setStatusFailed();
+
+        //       } elseif ($transaction == 'expire') {
+
+        //           $donation->setStatusExpired();
+
+        //       } elseif ($transaction == 'cancel') {
+
+        //           $donation->setStatusFailed();
+
+        //       }
+
+        //     });
+
+        //     return;
+        // } catch (\Throwable $th) {
+        //     //throw $th;
+
+        //     return $th;
+        // }
     }
 }
